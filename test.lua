@@ -78,14 +78,27 @@ assert(d.bgHex("#ff0000")("test") == ""
 	.. bgHex.disable,
 	"bgHex")
 
+-- error checking
+local ok, err
+
+-- error on invalid rgb value
+ok, err = pcall(d.rgb, 256, 0, 0)
+assert(not ok, err)
+
+-- error on invalid hex value
+for _, code in ipairs({ "#fg0000", "#000", "#000000g" }) do
+	ok, err = pcall(d.hex, code)
+	assert(not ok, err)
+end
+
 -- error on modifying code map
-local ok, err = pcall(function()
+ok, err = pcall(function()
 	codes.rgb = function() end
 end)
 assert(not ok, err)
 
 -- error on adding new key to codemap
-local ok, err = pcall(function()
+ok, err = pcall(function()
 	codes.some_new_code = {}
 end)
 assert(not ok, err)
