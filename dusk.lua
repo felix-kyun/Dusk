@@ -136,8 +136,7 @@ local function parseRgb(r, g, b)
 	if (r == nil or g == nil or b == nil)
 		or (r < 0 or g < 0 or b < 0)
 		or (r > 255 or g > 255 or b > 255) then
-		error("invalid rgb value: r=" .. tostring(r) .. " g=" .. tostring(g) .. " b=" .. tostring(b))
-		return false
+		error(("Dusk: invalid rgb value (%d, %d, %d)"):format(r, g, b))
 	end
 	return true
 end
@@ -177,6 +176,9 @@ end
 --- validate hex values
 local function parseHex(hex)
 	local val = hex:gsub("^#", "")
+	if (#val ~= 6) then
+		error("Dusk: invalid hex value: " .. tostring(hex))
+	end
 
 	local rgb = {
 		tonumber(val:sub(1, 2), 16),
@@ -186,7 +188,7 @@ local function parseHex(hex)
 
 	local ok, ret = pcall(parseRgb, table.unpack(rgb))
 	if not ok then
-		error("invalid hex value: " .. tostring(hex))
+		error("Dusk: invalid hex value: " .. tostring(hex))
 	end
 
 	return rgb
