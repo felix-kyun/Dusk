@@ -8,6 +8,52 @@
     Copyright (c) 2026 Praise Jacob
 ]]
 
+--- @class Dusk
+--- @field reset 			Dusk
+--- @field bold 			Dusk
+--- @field dim 				Dusk
+--- @field italic 			Dusk
+--- @field underline 		Dusk
+--- @field blink 			Dusk
+--- @field inverse 			Dusk
+--- @field hidden 			Dusk
+--- @field strikethrough 	Dusk
+--- @field black 			Dusk
+--- @field red 				Dusk
+--- @field green 			Dusk
+--- @field yellow 			Dusk
+--- @field blue 			Dusk
+--- @field magenta 			Dusk
+--- @field cyan 			Dusk
+--- @field white 			Dusk
+--- @field gray 			Dusk
+--- @field grey 			Dusk
+--- @field blackBright 		Dusk
+--- @field redBright 		Dusk
+--- @field greenBright 		Dusk
+--- @field yellowBright 	Dusk
+--- @field blueBright 		Dusk
+--- @field magentaBright 	Dusk
+--- @field cyanBright 		Dusk
+--- @field whiteBright 		Dusk
+--- @field bgBlack 			Dusk
+--- @field bgRed 			Dusk
+--- @field bgGreen 			Dusk
+--- @field bgYellow 		Dusk
+--- @field bgBlue 			Dusk
+--- @field bgMagenta 		Dusk
+--- @field bgCyan 			Dusk
+--- @field bgWhite 			Dusk
+--- @field bgGray 			Dusk
+--- @field bgGrey 			Dusk
+--- @field bgBlackBright 	Dusk
+--- @field bgRedBright 		Dusk
+--- @field bgGreenBright 	Dusk
+--- @field bgYellowBright 	Dusk
+--- @field bgBlueBright 	Dusk
+--- @field bgMagentaBright 	Dusk
+--- @field bgCyanBright 	Dusk
+--- @field bgWhiteBright 	Dusk
 local Dusk = {}
 local codes = {
 	-- Modifiers
