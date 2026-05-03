@@ -57,59 +57,59 @@
 local Dusk = {}
 local codes = {
 	-- Modifiers
-	reset           = { open = "\27[0m", close = "\27[0m" },
-	bold            = { open = "\27[1m", close = "\27[22m" },
-	dim             = { open = "\27[2m", close = "\27[22m" },
-	italic          = { open = "\27[3m", close = "\27[23m" },
-	underline       = { open = "\27[4m", close = "\27[24m" },
-	blink           = { open = "\27[5m", close = "\27[25m" },
-	inverse         = { open = "\27[7m", close = "\27[27m" },
-	hidden          = { open = "\27[8m", close = "\27[28m" },
-	strikethrough   = { open = "\27[9m", close = "\27[29m" },
+	reset           = { enable = "\27[0m", disable = "\27[0m" },
+	bold            = { enable = "\27[1m", disable = "\27[22m" },
+	dim             = { enable = "\27[2m", disable = "\27[22m" },
+	italic          = { enable = "\27[3m", disable = "\27[23m" },
+	underline       = { enable = "\27[4m", disable = "\27[24m" },
+	blink           = { enable = "\27[5m", disable = "\27[25m" },
+	inverse         = { enable = "\27[7m", disable = "\27[27m" },
+	hidden          = { enable = "\27[8m", disable = "\27[28m" },
+	strikethrough   = { enable = "\27[9m", disable = "\27[29m" },
 
 	-- Foreground colors
-	black           = { open = "\27[30m", close = "\27[39m" },
-	red             = { open = "\27[31m", close = "\27[39m" },
-	green           = { open = "\27[32m", close = "\27[39m" },
-	yellow          = { open = "\27[33m", close = "\27[39m" },
-	blue            = { open = "\27[34m", close = "\27[39m" },
-	magenta         = { open = "\27[35m", close = "\27[39m" },
-	cyan            = { open = "\27[36m", close = "\27[39m" },
-	white           = { open = "\27[37m", close = "\27[39m" },
-	gray            = { open = "\27[90m", close = "\27[39m" },
-	grey            = { open = "\27[90m", close = "\27[39m" },
+	black           = { enable = "\27[30m", disable = "\27[39m" },
+	red             = { enable = "\27[31m", disable = "\27[39m" },
+	green           = { enable = "\27[32m", disable = "\27[39m" },
+	yellow          = { enable = "\27[33m", disable = "\27[39m" },
+	blue            = { enable = "\27[34m", disable = "\27[39m" },
+	magenta         = { enable = "\27[35m", disable = "\27[39m" },
+	cyan            = { enable = "\27[36m", disable = "\27[39m" },
+	white           = { enable = "\27[37m", disable = "\27[39m" },
+	gray            = { enable = "\27[90m", disable = "\27[39m" },
+	grey            = { enable = "\27[90m", disable = "\27[39m" },
 
 	-- Bright foreground colors
-	blackBright     = { open = "\27[90m", close = "\27[39m" },
-	redBright       = { open = "\27[91m", close = "\27[39m" },
-	greenBright     = { open = "\27[92m", close = "\27[39m" },
-	yellowBright    = { open = "\27[93m", close = "\27[39m" },
-	blueBright      = { open = "\27[94m", close = "\27[39m" },
-	magentaBright   = { open = "\27[95m", close = "\27[39m" },
-	cyanBright      = { open = "\27[96m", close = "\27[39m" },
-	whiteBright     = { open = "\27[97m", close = "\27[39m" },
+	blackBright     = { enable = "\27[90m", disable = "\27[39m" },
+	redBright       = { enable = "\27[91m", disable = "\27[39m" },
+	greenBright     = { enable = "\27[92m", disable = "\27[39m" },
+	yellowBright    = { enable = "\27[93m", disable = "\27[39m" },
+	blueBright      = { enable = "\27[94m", disable = "\27[39m" },
+	magentaBright   = { enable = "\27[95m", disable = "\27[39m" },
+	cyanBright      = { enable = "\27[96m", disable = "\27[39m" },
+	whiteBright     = { enable = "\27[97m", disable = "\27[39m" },
 
 	-- Background colors
-	bgBlack         = { open = "\27[40m", close = "\27[49m" },
-	bgRed           = { open = "\27[41m", close = "\27[49m" },
-	bgGreen         = { open = "\27[42m", close = "\27[49m" },
-	bgYellow        = { open = "\27[43m", close = "\27[49m" },
-	bgBlue          = { open = "\27[44m", close = "\27[49m" },
-	bgMagenta       = { open = "\27[45m", close = "\27[49m" },
-	bgCyan          = { open = "\27[46m", close = "\27[49m" },
-	bgWhite         = { open = "\27[47m", close = "\27[49m" },
-	bgGray          = { open = "\27[100m", close = "\27[49m" },
-	bgGrey          = { open = "\27[100m", close = "\27[49m" },
+	bgBlack         = { enable = "\27[40m", disable = "\27[49m" },
+	bgRed           = { enable = "\27[41m", disable = "\27[49m" },
+	bgGreen         = { enable = "\27[42m", disable = "\27[49m" },
+	bgYellow        = { enable = "\27[43m", disable = "\27[49m" },
+	bgBlue          = { enable = "\27[44m", disable = "\27[49m" },
+	bgMagenta       = { enable = "\27[45m", disable = "\27[49m" },
+	bgCyan          = { enable = "\27[46m", disable = "\27[49m" },
+	bgWhite         = { enable = "\27[47m", disable = "\27[49m" },
+	bgGray          = { enable = "\27[100m", disable = "\27[49m" },
+	bgGrey          = { enable = "\27[100m", disable = "\27[49m" },
 
 	-- Bright background colors
-	bgBlackBright   = { open = "\27[100m", close = "\27[49m" },
-	bgRedBright     = { open = "\27[101m", close = "\27[49m" },
-	bgGreenBright   = { open = "\27[102m", close = "\27[49m" },
-	bgYellowBright  = { open = "\27[103m", close = "\27[49m" },
-	bgBlueBright    = { open = "\27[104m", close = "\27[49m" },
-	bgMagentaBright = { open = "\27[105m", close = "\27[49m" },
-	bgCyanBright    = { open = "\27[106m", close = "\27[49m" },
-	bgWhiteBright   = { open = "\27[107m", close = "\27[49m" },
+	bgBlackBright   = { enable = "\27[100m", disable = "\27[49m" },
+	bgRedBright     = { enable = "\27[101m", disable = "\27[49m" },
+	bgGreenBright   = { enable = "\27[102m", disable = "\27[49m" },
+	bgYellowBright  = { enable = "\27[103m", disable = "\27[49m" },
+	bgBlueBright    = { enable = "\27[104m", disable = "\27[49m" },
+	bgMagentaBright = { enable = "\27[105m", disable = "\27[49m" },
+	bgCyanBright    = { enable = "\27[106m", disable = "\27[49m" },
+	bgWhiteBright   = { enable = "\27[107m", disable = "\27[49m" },
 }
 
 --- Creates a shallow copy of a table.
@@ -151,8 +151,8 @@ return setmetatable(Dusk, {
 		local open, close = "", ""
 
 		for _, code in ipairs(collector) do
-			open = open .. code.open
-			close = code.close .. close
+			open = open .. code.enable
+			close = code.disable .. close
 		end
 
 		return open .. str .. close
