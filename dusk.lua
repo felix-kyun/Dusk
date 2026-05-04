@@ -145,17 +145,18 @@ return setmetatable(Dusk, {
 	end,
 	--- returns the styled string.
 	--- @param collector Dusk
-	--- @param str string
+	--- @param ... string
 	--- @return string
-	__call = function(collector, str)
+	__call = function(collector, ...)
 		local open, close = "", ""
+		local target = table.concat(table.pack(...), " ")
 
 		for _, code in ipairs(collector) do
 			open = open .. code.enable
 			close = code.disable .. close
 		end
 
-		return open .. str .. close
+		return open .. target .. close
 	end,
 	_codes = codes
 })
