@@ -55,9 +55,16 @@
 --- @field bgMagentaBright 	Dusk
 --- @field bgCyanBright 	Dusk
 --- @field bgWhiteBright 	Dusk
+--- @field rgb 				fun(r: number, g: number, b: number): Dusk
+--- @field bgRgb 			fun(r: number, g: number, b: number): Dusk
 
+--- @class Codeset
+--- @field enable string
+--- @field disable string
+
+--- @type table<string, Codeset>
 local codes = {
-	-- Modifiers
+	--- mods
 	reset           = { enable = "\27[0m", disable = "\27[0m" },
 	bold            = { enable = "\27[1m", disable = "\27[22m" },
 	dim             = { enable = "\27[2m", disable = "\27[22m" },
@@ -68,7 +75,7 @@ local codes = {
 	hidden          = { enable = "\27[8m", disable = "\27[28m" },
 	strikethrough   = { enable = "\27[9m", disable = "\27[29m" },
 
-	-- Foreground colors
+	--- fg
 	black           = { enable = "\27[30m", disable = "\27[39m" },
 	red             = { enable = "\27[31m", disable = "\27[39m" },
 	green           = { enable = "\27[32m", disable = "\27[39m" },
@@ -80,7 +87,7 @@ local codes = {
 	gray            = { enable = "\27[90m", disable = "\27[39m" },
 	grey            = { enable = "\27[90m", disable = "\27[39m" },
 
-	-- Bright foreground colors
+	--- bright fg
 	blackBright     = { enable = "\27[90m", disable = "\27[39m" },
 	redBright       = { enable = "\27[91m", disable = "\27[39m" },
 	greenBright     = { enable = "\27[92m", disable = "\27[39m" },
@@ -90,7 +97,7 @@ local codes = {
 	cyanBright      = { enable = "\27[96m", disable = "\27[39m" },
 	whiteBright     = { enable = "\27[97m", disable = "\27[39m" },
 
-	-- Background colors
+	--- bg
 	bgBlack         = { enable = "\27[40m", disable = "\27[49m" },
 	bgRed           = { enable = "\27[41m", disable = "\27[49m" },
 	bgGreen         = { enable = "\27[42m", disable = "\27[49m" },
@@ -102,7 +109,7 @@ local codes = {
 	bgGray          = { enable = "\27[100m", disable = "\27[49m" },
 	bgGrey          = { enable = "\27[100m", disable = "\27[49m" },
 
-	-- Bright background colors
+	--- bright bg
 	bgBlackBright   = { enable = "\27[100m", disable = "\27[49m" },
 	bgRedBright     = { enable = "\27[101m", disable = "\27[49m" },
 	bgGreenBright   = { enable = "\27[102m", disable = "\27[49m" },
@@ -113,9 +120,29 @@ local codes = {
 	bgWhiteBright   = { enable = "\27[107m", disable = "\27[49m" },
 }
 
---- Creates a shallow copy of a table.
---- @param t table
---- @return table
+local helpers = {
+	--- fg rgb
+	rgb = function(collector)
+		return function(r, g, b)
+			return collector + {
+				enable = ("\27[38;2;%d;%d;%dm"):format(r, g, b),
+				disable = "\27[39m"
+			}
+		end
+	end,
+
+	--- bg rgb
+	bgRgb = function(collector)
+		return function(r, g, b)
+			return collector + {
+				enable = ("\27[48;2;%d;%d;%dm"):format(r, g, b),
+				disable = "\27[49m"
+			}
+		end
+	end,
+}
+
+--- shallow copy
 local function copy(t)
 	local result = {}
 	for k, v in pairs(t) do
@@ -125,7 +152,8 @@ local function copy(t)
 end
 
 return setmetatable({}, {
-	--- returns a new collector with the style appended.
+
+	--- Creates a new collector with the style appended.
 	--- @param collector Dusk
 	--- @param key string
 	--- @return Dusk
@@ -134,17 +162,19 @@ return setmetatable({}, {
 			return rawget(collector, key)
 		end
 
+		if helpers[key] then
+			return helpers[key](collector)
+		end
+
 		if not codes[key] then
 			error("Dusk: unknown style '" .. key .. "'")
 			return collector
 		end
 
-		local newCollector = copy(collector)
-		newCollector[#newCollector + 1] = codes[key]
-
-		return setmetatable(newCollector, getmetatable(collector))
+		return collector + codes[key]
 	end,
-	--- returns the styled string.
+
+	--- Returns the styled string.
 	--- @param collector Dusk
 	--- @param ... string
 	--- @return string
@@ -159,5 +189,17 @@ return setmetatable({}, {
 
 		return open .. target .. close
 	end,
+
+	--- Creates a new collector with the codeset.
+	--- @param collector Dusk
+	--- @param codeset { enable: string, disable: string }
+	--- @return Dusk
+	__add = function(collector, codeset)
+		local newCollector = copy(collector)
+		newCollector[#newCollector + 1] = codeset
+		return setmetatable(newCollector, getmetatable(collector))
+	end,
+
+	--- For testing
 	_codes = codes
 }) --[[ @as Dusk ]]
