@@ -39,3 +39,11 @@ assert(d.red.bold("test", "test2") == ""
 	.. codes.bold.disable
 	.. codes.red.disable,
 	"multiple args")
+
+-- rgb
+local rgb = codes.rgb(d)(255, 0, 0)[1]
+assert(d.rgb(255, 0, 0)("test") == ""
+	.. rgb.enable
+	.. "test"
+	.. rgb.disable,
+	"rgb")
