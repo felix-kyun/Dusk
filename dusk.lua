@@ -118,26 +118,6 @@ local codes = {
 	bgMagentaBright = { enable = "\27[105m", disable = "\27[49m" },
 	bgCyanBright    = { enable = "\27[106m", disable = "\27[49m" },
 	bgWhiteBright   = { enable = "\27[107m", disable = "\27[49m" },
-
-	--- fg rgb
-	rgb             = function(collector)
-		return function(r, g, b)
-			return collector + {
-				enable = ("\27[38;2;%d;%d;%dm"):format(r, g, b),
-				disable = "\27[39m"
-			}
-		end
-	end,
-
-	--- bg rgb
-	bgRgb           = function(collector)
-		return function(r, g, b)
-			return collector + {
-				enable = ("\27[48;2;%d;%d;%dm"):format(r, g, b),
-				disable = "\27[49m"
-			}
-		end
-	end,
 }
 
 --- shallow copy
@@ -147,6 +127,39 @@ local function copy(t)
 		result[k] = v
 	end
 	return result
+end
+
+--- validate rgb values
+local function validateRgb(r, g, b)
+	if (r == nil or g == nil or b == nil)
+		or (r < 0 or g < 0 or b < 0)
+		or (r > 255 or g > 255 or b > 255) then
+		error("invalid rgb value: r=" .. tostring(r) .. " g=" .. tostring(g) .. " b=" .. tostring(b))
+		return nil
+	end
+	return true
+end
+
+--- fg rgb
+function codes.rgb(collector)
+	return function(r, g, b)
+		if not validateRgb(r, g, b) then return collector end
+		return collector + {
+			enable = ("\27[38;2;%d;%d;%dm"):format(r, g, b),
+			disable = "\27[39m"
+		}
+	end
+end
+
+--- bg rgb
+function codes.bgRgb(collector)
+	return function(r, g, b)
+		if not validateRgb(r, g, b) then return collector end
+		return collector + {
+			enable = ("\27[48;2;%d;%d;%dm"):format(r, g, b),
+			disable = "\27[49m"
+		}
+	end
 end
 
 return setmetatable({}, {
