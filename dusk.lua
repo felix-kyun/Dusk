@@ -57,6 +57,8 @@
 --- @field bgWhiteBright 	Dusk
 --- @field rgb 				fun(r: number, g: number, b: number): Dusk
 --- @field bgRgb 			fun(r: number, g: number, b: number): Dusk
+--- @field hex 				fun(color: string): Dusk
+--- @field bgHex 			fun(color: string): Dusk
 
 --- @class Codeset
 --- @field enable string
@@ -130,12 +132,12 @@ local function copy(t)
 end
 
 --- validate rgb values
-local function validateRgb(r, g, b)
+local function parseRgb(r, g, b)
 	if (r == nil or g == nil or b == nil)
 		or (r < 0 or g < 0 or b < 0)
 		or (r > 255 or g > 255 or b > 255) then
 		error("invalid rgb value: r=" .. tostring(r) .. " g=" .. tostring(g) .. " b=" .. tostring(b))
-		return nil
+		return false
 	end
 	return true
 end
@@ -143,7 +145,12 @@ end
 --- fg rgb
 function codes.rgb(collector)
 	return function(r, g, b)
-		if not validateRgb(r, g, b) then return collector end
+		local ok, ret = pcall(parseRgb, r, g, b)
+		if not ok then
+			error(ret)
+			return collector
+		end
+
 		return collector + {
 			enable = ("\27[38;2;%d;%d;%dm"):format(r, g, b),
 			disable = "\27[39m"
@@ -154,9 +161,62 @@ end
 --- bg rgb
 function codes.bgRgb(collector)
 	return function(r, g, b)
-		if not validateRgb(r, g, b) then return collector end
+		local ok, ret = pcall(parseRgb, r, g, b)
+		if not ok then
+			error(ret)
+			return collector
+		end
+
 		return collector + {
 			enable = ("\27[48;2;%d;%d;%dm"):format(r, g, b),
+			disable = "\27[49m"
+		}
+	end
+end
+
+--- validate hex values
+local function parseHex(hex)
+	local val = hex:gsub("^#", "")
+
+	local rgb = {
+		tonumber(val:sub(1, 2), 16),
+		tonumber(val:sub(3, 4), 16),
+		tonumber(val:sub(5, 6), 16),
+	}
+
+	local ok, ret = pcall(parseRgb, table.unpack(rgb))
+	if not ok then
+		error("invalid hex value: " .. tostring(hex))
+	end
+
+	return rgb
+end
+
+function codes.hex(collector)
+	return function(hex)
+		local ok, ret = pcall(parseHex, hex)
+		if not ok then
+			error(ret)
+			return collector
+		end
+
+		return collector + {
+			enable = ("\27[38;2;%d;%d;%dm"):format(table.unpack(ret)),
+			disable = "\27[39m"
+		}
+	end
+end
+
+function codes.bgHex(collector)
+	return function(hex)
+		local ok, ret = pcall(parseHex, hex)
+		if not ok then
+			error(ret)
+			return collector
+		end
+
+		return collector + {
+			enable = ("\27[48;2;%d;%d;%dm"):format(table.unpack(ret)),
 			disable = "\27[49m"
 		}
 	end
