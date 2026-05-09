@@ -272,5 +272,10 @@ return setmetatable({}, {
 	end,
 
 	--- For testing
-	_codes = codes
+	_codes = setmetatable({}, {
+		__index = codes,
+		__newindex = function(t, k, v)
+			error("Dusk: Can't modify code table")
+		end
+	})
 }) --[[ @as Dusk ]]

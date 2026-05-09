@@ -77,3 +77,15 @@ assert(d.bgHex("#ff0000")("test") == ""
 	.. "test"
 	.. bgHex.disable,
 	"bgHex")
+
+-- error on modifying code map
+local ok, err = pcall(function()
+	codes.rgb = function() end
+end)
+assert(not ok, err)
+
+-- error on adding new key to codemap
+local ok, err = pcall(function()
+	codes.some_new_code = {}
+end)
+assert(not ok, err)
