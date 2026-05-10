@@ -67,59 +67,59 @@
 --- @type table<string, (function | Codeset)>
 local codes = {
 	--- mods
-	reset           = { enable = "\27[0m", disable = "\27[0m" },
-	bold            = { enable = "\27[1m", disable = "\27[22m" },
-	dim             = { enable = "\27[2m", disable = "\27[22m" },
-	italic          = { enable = "\27[3m", disable = "\27[23m" },
-	underline       = { enable = "\27[4m", disable = "\27[24m" },
-	blink           = { enable = "\27[5m", disable = "\27[25m" },
-	inverse         = { enable = "\27[7m", disable = "\27[27m" },
-	hidden          = { enable = "\27[8m", disable = "\27[28m" },
-	strikethrough   = { enable = "\27[9m", disable = "\27[29m" },
+	reset           = { enable = "\x1b[0m", disable = "\x1b[0m" },
+	bold            = { enable = "\x1b[1m", disable = "\x1b[22m" },
+	dim             = { enable = "\x1b[2m", disable = "\x1b[22m" },
+	italic          = { enable = "\x1b[3m", disable = "\x1b[23m" },
+	underline       = { enable = "\x1b[4m", disable = "\x1b[24m" },
+	blink           = { enable = "\x1b[5m", disable = "\x1b[25m" },
+	inverse         = { enable = "\x1b[7m", disable = "\x1b[27m" },
+	hidden          = { enable = "\x1b[8m", disable = "\x1b[28m" },
+	strikethrough   = { enable = "\x1b[9m", disable = "\x1b[29m" },
 
 	--- fg
-	black           = { enable = "\27[30m", disable = "\27[39m" },
-	red             = { enable = "\27[31m", disable = "\27[39m" },
-	green           = { enable = "\27[32m", disable = "\27[39m" },
-	yellow          = { enable = "\27[33m", disable = "\27[39m" },
-	blue            = { enable = "\27[34m", disable = "\27[39m" },
-	magenta         = { enable = "\27[35m", disable = "\27[39m" },
-	cyan            = { enable = "\27[36m", disable = "\27[39m" },
-	white           = { enable = "\27[37m", disable = "\27[39m" },
-	gray            = { enable = "\27[90m", disable = "\27[39m" },
-	grey            = { enable = "\27[90m", disable = "\27[39m" },
+	black           = { enable = "\x1b[30m", disable = "\x1b[39m" },
+	red             = { enable = "\x1b[31m", disable = "\x1b[39m" },
+	green           = { enable = "\x1b[32m", disable = "\x1b[39m" },
+	yellow          = { enable = "\x1b[33m", disable = "\x1b[39m" },
+	blue            = { enable = "\x1b[34m", disable = "\x1b[39m" },
+	magenta         = { enable = "\x1b[35m", disable = "\x1b[39m" },
+	cyan            = { enable = "\x1b[36m", disable = "\x1b[39m" },
+	white           = { enable = "\x1b[37m", disable = "\x1b[39m" },
+	gray            = { enable = "\x1b[90m", disable = "\x1b[39m" },
+	grey            = { enable = "\x1b[90m", disable = "\x1b[39m" },
 
 	--- bright fg
-	blackBright     = { enable = "\27[90m", disable = "\27[39m" },
-	redBright       = { enable = "\27[91m", disable = "\27[39m" },
-	greenBright     = { enable = "\27[92m", disable = "\27[39m" },
-	yellowBright    = { enable = "\27[93m", disable = "\27[39m" },
-	blueBright      = { enable = "\27[94m", disable = "\27[39m" },
-	magentaBright   = { enable = "\27[95m", disable = "\27[39m" },
-	cyanBright      = { enable = "\27[96m", disable = "\27[39m" },
-	whiteBright     = { enable = "\27[97m", disable = "\27[39m" },
+	blackBright     = { enable = "\x1b[90m", disable = "\x1b[39m" },
+	redBright       = { enable = "\x1b[91m", disable = "\x1b[39m" },
+	greenBright     = { enable = "\x1b[92m", disable = "\x1b[39m" },
+	yellowBright    = { enable = "\x1b[93m", disable = "\x1b[39m" },
+	blueBright      = { enable = "\x1b[94m", disable = "\x1b[39m" },
+	magentaBright   = { enable = "\x1b[95m", disable = "\x1b[39m" },
+	cyanBright      = { enable = "\x1b[96m", disable = "\x1b[39m" },
+	whiteBright     = { enable = "\x1b[97m", disable = "\x1b[39m" },
 
 	--- bg
-	bgBlack         = { enable = "\27[40m", disable = "\27[49m" },
-	bgRed           = { enable = "\27[41m", disable = "\27[49m" },
-	bgGreen         = { enable = "\27[42m", disable = "\27[49m" },
-	bgYellow        = { enable = "\27[43m", disable = "\27[49m" },
-	bgBlue          = { enable = "\27[44m", disable = "\27[49m" },
-	bgMagenta       = { enable = "\27[45m", disable = "\27[49m" },
-	bgCyan          = { enable = "\27[46m", disable = "\27[49m" },
-	bgWhite         = { enable = "\27[47m", disable = "\27[49m" },
-	bgGray          = { enable = "\27[100m", disable = "\27[49m" },
-	bgGrey          = { enable = "\27[100m", disable = "\27[49m" },
+	bgBlack         = { enable = "\x1b[40m", disable = "\x1b[49m" },
+	bgRed           = { enable = "\x1b[41m", disable = "\x1b[49m" },
+	bgGreen         = { enable = "\x1b[42m", disable = "\x1b[49m" },
+	bgYellow        = { enable = "\x1b[43m", disable = "\x1b[49m" },
+	bgBlue          = { enable = "\x1b[44m", disable = "\x1b[49m" },
+	bgMagenta       = { enable = "\x1b[45m", disable = "\x1b[49m" },
+	bgCyan          = { enable = "\x1b[46m", disable = "\x1b[49m" },
+	bgWhite         = { enable = "\x1b[47m", disable = "\x1b[49m" },
+	bgGray          = { enable = "\x1b[100m", disable = "\x1b[49m" },
+	bgGrey          = { enable = "\x1b[100m", disable = "\x1b[49m" },
 
 	--- bright bg
-	bgBlackBright   = { enable = "\27[100m", disable = "\27[49m" },
-	bgRedBright     = { enable = "\27[101m", disable = "\27[49m" },
-	bgGreenBright   = { enable = "\27[102m", disable = "\27[49m" },
-	bgYellowBright  = { enable = "\27[103m", disable = "\27[49m" },
-	bgBlueBright    = { enable = "\27[104m", disable = "\27[49m" },
-	bgMagentaBright = { enable = "\27[105m", disable = "\27[49m" },
-	bgCyanBright    = { enable = "\27[106m", disable = "\27[49m" },
-	bgWhiteBright   = { enable = "\27[107m", disable = "\27[49m" },
+	bgBlackBright   = { enable = "\x1b[100m", disable = "\x1b[49m" },
+	bgRedBright     = { enable = "\x1b[101m", disable = "\x1b[49m" },
+	bgGreenBright   = { enable = "\x1b[102m", disable = "\x1b[49m" },
+	bgYellowBright  = { enable = "\x1b[103m", disable = "\x1b[49m" },
+	bgBlueBright    = { enable = "\x1b[104m", disable = "\x1b[49m" },
+	bgMagentaBright = { enable = "\x1b[105m", disable = "\x1b[49m" },
+	bgCyanBright    = { enable = "\x1b[106m", disable = "\x1b[49m" },
+	bgWhiteBright   = { enable = "\x1b[107m", disable = "\x1b[49m" },
 }
 
 --- shallow copy
@@ -151,8 +151,8 @@ function codes.rgb(collector)
 		end
 
 		return collector + {
-			enable = ("\27[38;2;%d;%d;%dm"):format(r, g, b),
-			disable = "\27[39m"
+			enable = ("\x1b[38;2;%d;%d;%dm"):format(r, g, b),
+			disable = "\x1b[39m"
 		}
 	end
 end
@@ -167,8 +167,8 @@ function codes.bgRgb(collector)
 		end
 
 		return collector + {
-			enable = ("\27[48;2;%d;%d;%dm"):format(r, g, b),
-			disable = "\27[49m"
+			enable = ("\x1b[48;2;%d;%d;%dm"):format(r, g, b),
+			disable = "\x1b[49m"
 		}
 	end
 end
@@ -203,8 +203,8 @@ function codes.hex(collector)
 		end
 
 		return collector + {
-			enable = ("\27[38;2;%d;%d;%dm"):format(table.unpack(ret)),
-			disable = "\27[39m"
+			enable = ("\x1b[38;2;%d;%d;%dm"):format(table.unpack(ret)),
+			disable = "\x1b[39m"
 		}
 	end
 end
@@ -218,8 +218,8 @@ function codes.bgHex(collector)
 		end
 
 		return collector + {
-			enable = ("\27[48;2;%d;%d;%dm"):format(table.unpack(ret)),
-			disable = "\27[49m"
+			enable = ("\x1b[48;2;%d;%d;%dm"):format(table.unpack(ret)),
+			disable = "\x1b[49m"
 		}
 	end
 end
@@ -239,8 +239,8 @@ function codes.ansi(collector)
 		end
 
 		return collector + {
-			enable = ("\27[38;5;%dm"):format(code),
-			disable = "\27[39m"
+			enable = ("\x1b[38;5;%dm"):format(code),
+			disable = "\x1b[39m"
 		}
 	end
 end
@@ -254,8 +254,8 @@ function codes.bgAnsi(collector)
 		end
 
 		return collector + {
-			enable = ("\27[48;5;%dm"):format(code),
-			disable = "\27[49m"
+			enable = ("\x1b[48;5;%dm"):format(code),
+			disable = "\x1b[49m"
 		}
 	end
 end
