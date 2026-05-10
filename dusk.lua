@@ -224,6 +224,42 @@ function codes.bgHex(collector)
 	end
 end
 
+local function parseAnsi(code)
+	assert(type(code) == "number", "Dusk: expected number, got " .. type(code))
+	assert(code >= 0 and code <= 255, "Dusk: expected ansi code in range 0-255, got " .. tostring(code))
+	return code
+end
+
+function codes.ansi(collector)
+	return function(code)
+		local ok, err = pcall(parseAnsi, code)
+		if not ok then
+			error(err)
+			return collector
+		end
+
+		return collector + {
+			enable = ("\27[38;5;%dm"):format(code),
+			disable = "\27[39m"
+		}
+	end
+end
+
+function codes.bgAnsi(collector)
+	return function(code)
+		local ok, err = pcall(parseAnsi, code)
+		if not ok then
+			error(err)
+			return collector
+		end
+
+		return collector + {
+			enable = ("\27[48;5;%dm"):format(code),
+			disable = "\27[49m"
+		}
+	end
+end
+
 return setmetatable({}, {
 
 	--- Creates a new collector with the style appended.
@@ -281,3 +317,7 @@ return setmetatable({}, {
 		end
 	})
 }) --[[ @as Dusk ]]
+
+--- todo
+--- strip
+--- seperate metafield for storing codes
