@@ -106,6 +106,7 @@ local codemap = {
 	dim             = { enable = "\x1b[2m", disable = "\x1b[22m" },
 	italic          = { enable = "\x1b[3m", disable = "\x1b[23m" },
 	underline       = { enable = "\x1b[4m", disable = "\x1b[24m" },
+	overline        = { enable = "\x1b[53m", disable = "\x1b[55m" },
 	blink           = { enable = "\x1b[5m", disable = "\x1b[25m" },
 	inverse         = { enable = "\x1b[7m", disable = "\x1b[27m" },
 	hidden          = { enable = "\x1b[8m", disable = "\x1b[28m" },

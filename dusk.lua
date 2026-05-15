@@ -14,6 +14,7 @@
 --- @field bold 			Dusk
 --- @field dim 				Dusk
 --- @field italic 			Dusk
+--- @field overline 		Dusk
 --- @field underline 		Dusk
 --- @field blink 			Dusk
 --- @field inverse 			Dusk
@@ -67,18 +68,20 @@
 --- @field disable string
 
 --- @param code number
+--- @param disableCode? number
 --- @return Codeset
-local function buildMod(code)
+local function mod(code, disableCode)
 	assert(type(code) == "number")
+	disableCode = disableCode or code + 20
 	return {
 		enable = ("\x1b[%dm"):format(code),
-		disable = ("\x1b[%dm"):format(code + 20),
+		disable = ("\x1b[%dm"):format(disableCode),
 	}
 end
 
 --- @param code number
 --- @return Codeset
-local function buildFg(code)
+local function fg(code)
 	assert(type(code) == "number")
 	return {
 		enable = ("\x1b[%dm"):format(code),
@@ -99,37 +102,38 @@ end
 --- @type table<string, (function | Codeset)>
 local codes = {
 	--- mods
-	reset           = { enable = "\x1b[0m", disable = "\x1b[0m" },
-	bold            = { enable = "\x1b[1m", disable = "\x1b[22m" },
-	dim             = { enable = "\x1b[2m", disable = "\x1b[22m" },
-	italic          = buildMod(3),
-	underline       = buildMod(4),
-	blink           = buildMod(5),
-	inverse         = buildMod(7),
-	hidden          = buildMod(8),
-	strikethrough   = buildMod(9),
+	reset           = mod(0, 0),
+	bold            = mod(1, 22),
+	dim             = mod(2, 22),
+	overline        = mod(53, 55),
+	italic          = mod(3),
+	underline       = mod(4),
+	blink           = mod(5),
+	inverse         = mod(7),
+	hidden          = mod(8),
+	strikethrough   = mod(9),
 
 	--- fg
-	black           = buildFg(30),
-	red             = buildFg(31),
-	green           = buildFg(32),
-	yellow          = buildFg(33),
-	blue            = buildFg(34),
-	magenta         = buildFg(35),
-	cyan            = buildFg(36),
-	white           = buildFg(37),
-	gray            = buildFg(90),
-	grey            = buildFg(90),
+	black           = fg(30),
+	red             = fg(31),
+	green           = fg(32),
+	yellow          = fg(33),
+	blue            = fg(34),
+	magenta         = fg(35),
+	cyan            = fg(36),
+	white           = fg(37),
+	gray            = fg(90),
+	grey            = fg(90),
 
 	--- bright fg
-	blackBright     = buildFg(90),
-	redBright       = buildFg(91),
-	greenBright     = buildFg(92),
-	yellowBright    = buildFg(93),
-	blueBright      = buildFg(94),
-	magentaBright   = buildFg(95),
-	cyanBright      = buildFg(96),
-	whiteBright     = buildFg(97),
+	blackBright     = fg(90),
+	redBright       = fg(91),
+	greenBright     = fg(92),
+	yellowBright    = fg(93),
+	blueBright      = fg(94),
+	magentaBright   = fg(95),
+	cyanBright      = fg(96),
+	whiteBright     = fg(97),
 
 	--- bg
 	bgBlack         = buildBg(40),
