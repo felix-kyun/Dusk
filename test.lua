@@ -1,3 +1,9 @@
+#!/usr/bin/env lua
+
+if os.getenv("ENV") ~= "test" then
+	error("Please set ENV=test before running tests")
+end
+
 local d = require("dusk")
 local codes = getmetatable(d)._internals.codes
 local registry = getmetatable(d)._internals.registry
