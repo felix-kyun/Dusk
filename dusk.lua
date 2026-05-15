@@ -292,8 +292,15 @@ function codes.bgAnsi(collector)
 	end
 end
 
-return setmetatable({}, {
+--- @type table<Dusk, Codeset>
+local duskRegistry = setmetatable({}, {
+	__mode = "k"
+})
 
+local dusk = {}
+duskRegistry[dusk] = { enable = "", disable = "" }
+
+return setmetatable(dusk, {
 	--- Creates a new collector with the style appended.
 	--- @param collector Dusk
 	--- @param key string
@@ -320,15 +327,9 @@ return setmetatable({}, {
 	--- @param ... string
 	--- @return string
 	__call = function(collector, ...)
-		local open, close = "", ""
 		local target = table.concat(table.pack(...), " ")
-
-		for _, code in ipairs(collector) do
-			open = open .. code.enable
-			close = code.disable .. close
-		end
-
-		return open .. target .. close
+		local codeset = duskRegistry[collector]
+		return codeset.enable .. target .. codeset.disable
 	end,
 
 	--- Creates a new collector with the codeset.
@@ -337,15 +338,19 @@ return setmetatable({}, {
 	--- @return Dusk
 	__add = function(collector, codeset)
 		local newCollector = copy(collector)
-		newCollector[#newCollector + 1] = codeset
+
+		local oldCodeset = duskRegistry[collector]
+		duskRegistry[newCollector] = {
+			enable = oldCodeset.enable .. codeset.enable,
+			disable = codeset.disable .. oldCodeset.disable,
+		}
+
 		return setmetatable(newCollector, getmetatable(collector))
 	end,
 
-	--- For testing
-	_codes = setmetatable({}, {
-		__index = codes,
-		__newindex = function(t, k, v)
-			error("Dusk: Can't modify code table")
-		end
-	})
+	--- Exposed for testing
+	_internals = {
+		codes = codes,
+		registry = duskRegistry
+	}
 }) --[[ @as Dusk ]]
