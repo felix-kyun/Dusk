@@ -122,7 +122,6 @@ Dusk by default expects a modern terminal that supports ANSI escape codes. Dusk 
 
 - Detect terminal caps and downsample when needed.
 - `strip` style
-- `overline` style
 
 ## Thanks
 
